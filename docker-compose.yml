@@ -5,14 +5,18 @@ services:
     image: sniffer
     build: ./sniffer/
     container_name: sniffer
+    depends_on:
+      - collector_py
     network_mode: host
   collector_py:
     image: collector_py
     build: ./collector/
     container_name: collector_py
+    depends_on:
+      - collector_mongodb
     ports:
       - "3001:3001/udp"
-  mongodb:
+  collector_mongodb:
     image : mongo
     container_name: collector_mongodb
     restart: unless-stopped
