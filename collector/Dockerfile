@@ -1,7 +1,13 @@
-FROM mysql:latest
+FROM python:3
 
-LABEL Name=collector_db
+LABEL Name=collector_py
 
-ENV MYSQL_ROOT_PASSWORD=root
+WORKDIR /usr/src/app
 
-COPY ./mysqlsampledatabase.sql /docker-entrypoint-initdb.d/schema.sql
+COPY ./src/requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY ./ .
+
+CMD [ "python", "./main.py" ]
+
