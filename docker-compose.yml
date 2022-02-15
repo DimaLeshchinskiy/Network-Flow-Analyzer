@@ -1,14 +1,23 @@
-version: '3.4'
+version: '3.8'
 
 services:
   sniffer:
     image: sniffer
     build: ./sniffer/
+    container_name: sniffer
     network_mode: host
-  collector_db:
-    image: collector_db
+  collector_py:
+    image: collector_py
     build: ./collector/
+    container_name: collector_py
     ports:
-      - "3306:3306"  
+      - "3001:3001/udp"
+  mongodb:
+    image : mongo
+    container_name: collector_mongodb
+    restart: unless-stopped
     environment:
-      - MYSQL_ROOT_PASSWORD=root
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=root
+    ports:
+      - "3002:27017"
