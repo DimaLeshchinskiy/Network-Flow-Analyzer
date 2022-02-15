@@ -4,10 +4,10 @@ LABEL Name=collector_py
 
 WORKDIR /usr/src/app
 
-COPY ./src/requirements.txt ./
+COPY ./requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY ./ .
+COPY ./src ./
 
-CMD [ "python", "./main.py" ]
+CMD [ "python3", "main.py" ]
 
