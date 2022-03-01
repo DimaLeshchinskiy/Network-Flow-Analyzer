@@ -10,4 +10,6 @@
 #define ONE 0x80
 #define ZERO 0x00
 
-char *hashIP(uint32_t ipSrc, uint16_t portSrc, uint32_t ipDest, uint16_t portDest);
+namespace hashIP{   
+    char *hash(uint32_t ipSrc, uint16_t portSrc, uint32_t ipDest, uint16_t portDest, int l3_proto);
+}

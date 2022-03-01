@@ -208,21 +208,24 @@ namespace hash
     }
 }
 
-char *hashIP(uint32_t ipSrc, uint16_t portSrc, uint32_t ipDest, uint16_t portDest){
-    std::string input = std::to_string(ipSrc);
-    input.append(std::to_string(ipDest));
-    input.append(std::to_string(portSrc));
-    input.append(std::to_string(portDest));
+namespace hashIP{
+    char *hash(uint32_t ipSrc, uint16_t portSrc, uint32_t ipDest, uint16_t portDest, int l3_proto){
+        std::string input = std::to_string(ipSrc);
+        input.append(std::to_string(ipDest));
+        input.append(std::to_string(portSrc));
+        input.append(std::to_string(portDest));
+        input.append(std::to_string(l3_proto));
 
-    char result_hash[65]; // last char is 0; first hash
+        char result_hash[65]; // last char is 0; first hash
 
-    size_t buf_len =  input.length();
-    char *buffer = new char[buf_len];
+        size_t buf_len =  input.length();
+        char *buffer = new char[buf_len];
 
-    for(int i = 0; i < buf_len; i++){
-        buffer[i] = input.at(i);
+        for(int i = 0; i < buf_len; i++){
+            buffer[i] = input.at(i);
+        }
+
+        hash::hash(result_hash, buffer, buf_len);
+        return result_hash;
     }
-
-    hash::hash(result_hash, buffer, buf_len);
-    return result_hash;
 }
