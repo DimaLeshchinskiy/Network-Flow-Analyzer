@@ -31,12 +31,16 @@ if __name__ == "__main__":
     while(True):
         print("Listening...")
         data = socketServer.recvfrom(bufferSize)[0]
-        dataJson = json.loads(data)
-        print(data, dataJson)
+        try:
+            dataJson = json.loads(data)
+            print(data, dataJson)
 
-        insertedIds = collection.insert_one(dataJson)
+            insertedIds = collection.insert_one(dataJson)
 
-        print(f"Inserted {str(insertedIds).encode()} rows.")
+            print(f"Inserted {str(insertedIds).encode()} rows.")
+        except json.JSONDecodeError:
+            print(f"{data} is not in json fromat")
+            
 
 
 
